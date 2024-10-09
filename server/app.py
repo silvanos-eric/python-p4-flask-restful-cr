@@ -16,8 +16,14 @@ db.init_app(app)
 
 api = Api(app)
 
+
 class Home(Resource):
-    pass
+
+    def get(self):
+        return {'message': 'Welcome to the Newsletter RESTFul API'}
+
+
+api.add_resource(Home, '/')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
