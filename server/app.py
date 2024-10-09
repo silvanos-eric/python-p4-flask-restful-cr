@@ -42,8 +42,16 @@ class NewsLetters(Resource):
         return new_newsletter_dict
 
 
+class NewsletterById(Resource):
+
+    def get(self, id):
+        newsletter_dict = Newsletter.query.get(id).to_dict()
+        return newsletter_dict
+
+
 api.add_resource(Home, '/')
 api.add_resource(NewsLetters, '/newsletters')
+api.add_resource(NewsletterById, '/newsletters/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
