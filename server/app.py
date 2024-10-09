@@ -23,7 +23,27 @@ class Home(Resource):
         return {'message': 'Welcome to the Newsletter RESTFul API'}
 
 
+class NewsLetters(Resource):
+
+    def get(self):
+        newsletter_dict_list = [
+            newsletter.to_dict() for newsletter in Newsletter.query.all()
+        ]
+        return newsletter_dict_list
+
+    def post(self):
+        new_newsletter = Newsletter(title=request.form.get('title'),
+                                    body=request.form.get('body'))
+
+        db.session.add(new_newsletter)
+        db.session.commit()
+
+        new_newsletter_dict = new_newsletter.to_dict()
+        return new_newsletter_dict
+
+
 api.add_resource(Home, '/')
+api.add_resource(NewsLetters, '/newsletters')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
